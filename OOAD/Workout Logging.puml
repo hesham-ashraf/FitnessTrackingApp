@@ -1,0 +1,19 @@
+@startuml
+actor User
+entity "FitnessTrackingApp" as System
+participant "Authentication Controller" as AuthController
+participant "User Database" as UserDB
+
+User -> System : enterCredentials(email, password)
+System -> AuthController : validateCredentials(email, password)
+AuthController -> UserDB : retrieveEncryptedCredentials(email)
+UserDB --> AuthController : encryptedPassword
+AuthController -> AuthController : comparePasswordHash(password, encryptedPassword)
+alt validCredentials
+    AuthController --> System : successResponse
+    System -> User : displaySuccessMessage()
+else invalidCredentials
+    AuthController --> System : errorResponse
+    System -> User : displayErrorMessage()
+end
+@enduml

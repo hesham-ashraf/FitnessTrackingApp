@@ -1,0 +1,19 @@
+@startuml
+actor User
+entity "FitnessTrackingApp" as System
+participant "Workout Controller" as WorkoutController
+participant "Workout Database" as WorkoutDB
+participant "Progress Controller" as ProgressController
+participant "Progress Database" as ProgressDB
+
+User -> System : logWorkoutDetails(type, duration, intensity)
+System -> WorkoutController : saveWorkoutDetails(type, duration, intensity)
+WorkoutController -> WorkoutDB : storeWorkout(type, duration, intensity, userId)
+WorkoutDB --> WorkoutController : success
+WorkoutController -> ProgressController : updateUserProgress(userId, workoutData)
+ProgressController -> ProgressDB : saveProgressData(userId, newProgress)
+ProgressDB --> ProgressController : success
+ProgressController --> WorkoutController : progressUpdated
+WorkoutController --> System : workoutSaved
+System -> User : confirmWorkoutLogged()
+@enduml

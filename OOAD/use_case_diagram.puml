@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+actor User
+actor Admin
+
+rectangle "Fitness Tracking App" {
+    usecase "User Registration/Login" as UC01
+    usecase "Workout Logging" as UC02
+    usecase "Goal Setting" as UC03
+    usecase "Progress Tracking" as UC04
+    usecase "Personalized Feedback" as UC05
+    usecase "Admin Management" as UC06
+}
+
+User --> UC01
+User --> UC02
+User --> UC03
+User --> UC04
+User --> UC05
+Admin --> UC06
+@enduml
