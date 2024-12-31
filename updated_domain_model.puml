@@ -1,0 +1,76 @@
+
+@startuml
+class User {
+    +int id
+    +String name
+    +String email
+    +String password
+    +List<Workout> workouts
+    +List<Goal> goals
+    +Progress progress
+    +List<Notification> notifications
+    --
+    +register(): boolean
+    +login(String email, String password): boolean
+    +updateProfile(String name, String email): void
+    +resetPassword(String email): boolean
+}
+
+class Workout {
+    +int id
+    +String type
+    +int duration
+    +String intensity
+    +Date date
+    --
+    +logWorkout(String type, int duration, String intensity): void
+    +getWorkoutSummary(): String
+}
+
+class Goal {
+    +int id
+    +String goalType
+    +float targetValue
+    +Date deadline
+    +boolean isAchieved
+    --
+    +setGoal(String goalType, float targetValue, Date deadline): void
+    +checkGoalProgress(): String
+}
+
+class Progress {
+    +int id
+    +List<Float> dataPoints
+    +String trends
+    --
+    +generateReport(): String
+    +updateProgress(float newDataPoint): void
+}
+
+class Notification {
+    +int id
+    +String message
+    +Date timestamp
+    --
+    +sendNotification(String message): void
+}
+
+class Admin {
+    +int id
+    +String name
+    +String email
+    --
+    +manageUsers(): void
+    +viewUserProgress(int userId): Progress
+    +deactivateAccount(int userId): boolean
+}
+
+
+User --> "1.*" Workout : "logs"
+User --> "1.*" Goal : "sets"
+User --> "1" Progress : "tracks"
+User --> "0.*" Notification : "receives"
+Admin --> "0.*" User : "manages"
+Workout --> "1" Progress : "contributes to"
+Goal --> "1" Progress : "impacts"
+@enduml
